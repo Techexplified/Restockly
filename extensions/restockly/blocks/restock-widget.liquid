@@ -1,0 +1,112 @@
+{% if template.name == 'product' %}
+{{ 'widget.css' | asset_url | stylesheet_tag }}
+
+<div class="restockly-widget-wrapper" data-product-id="{{ product.id }}">
+  <!-- Low Stock Alert Banner -->
+  <div id="restockly-low-stock-banner" class="restockly-low-stock-banner" style="display: none;">
+    <span class="restockly-low-stock-icon">⚠️</span>
+    <span id="restockly-low-stock-text" class="restockly-low-stock-msg">Only {{ product.variants.first.inventory_quantity }} units remaining</span>
+  </div>
+
+  <!-- Out of Stock Badge -->
+  <div id="restockly-out-of-stock-badge" class="restockly-out-of-stock-badge" style="display: none;">
+    OUT OF STOCK
+  </div>
+
+  <!-- Notify Me Button -->
+  <button type="button" id="restockly-notify-btn" class="restockly-notify-btn" style="display: none; background-color: {{ block.settings.button_color }};">
+    <span class="restockly-btn-icon">🔔</span>
+    <span class="restockly-btn-text">{{ block.settings.button_text }}</span>
+  </button>
+
+  <!-- Inline Success Card -->
+  <div id="restockly-subscribed-card" class="restockly-subscribed-card" style="display: none;">
+    <div class="restockly-subscribed-icon-container">
+      <div class="restockly-subscribed-circle-check">✓</div>
+    </div>
+    <h4 class="restockly-subscribed-title">You're on the list!</h4>
+    <p id="restockly-subscribed-msg" class="restockly-subscribed-msg">We'll email you when this is back in stock.</p>
+    <hr class="restockly-subscribed-divider" />
+    <div class="restockly-subscribed-footer">
+      <span class="restockly-footer-icon">👥</span>
+      <span id="restockly-subscribed-count" class="restockly-subscribed-count">0 others are also waiting for this item.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Subscription Dialog -->
+<div id="restockly-modal" class="restockly-modal-overlay" style="display: none;">
+  <div class="restockly-modal-content">
+    <button type="button" id="restockly-modal-close" class="restockly-modal-close">&times;</button>
+    
+    <!-- Step 1: Signup Form -->
+    <div id="restockly-form-step">
+      <h3 class="restockly-modal-title">Get Restock Alerts</h3>
+      <p class="restockly-modal-subtitle">We will notify you immediately when this variant is restocked.</p>
+      
+      <form id="restockly-subscribe-form">
+        <!-- Selected variant details -->
+        <div class="restockly-selected-variant-row">
+          <span class="restockly-variant-img-placeholder" id="restockly-modal-variant-img">🧥</span>
+          <div class="restockly-variant-info">
+            <span class="restockly-variant-title" id="restockly-modal-variant-title">Blue Hoodie — Size M</span>
+            <span class="restockly-variant-price" id="restockly-modal-variant-price">$79.99</span>
+          </div>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <button type="submit" id="restockly-submit-btn" class="restockly-submit-btn" style="background-color: {{ block.settings.button_color }};">
+          Notify Me
+        </button>
+      </form>
+    </div>
+
+    <!-- Step 2: Success Confirmation -->
+    <div id="restockly-success-step" style="display: none;">
+      <div class="restockly-success-icon">✓</div>
+      <h3 class="restockly-modal-title">You're on the list!</h3>
+      <p class="restockly-modal-subtitle">We'll alert you the instant this product is back in stock.</p>
+      <button type="button" id="restockly-success-close-btn" class="restockly-submit-btn" style="background-color: {{ block.settings.button_color }};">
+        Done
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.Restockly = window.Restockly || {};
+  window.Restockly.product = {{ product | json }};
+  window.Restockly.variantInventory = {
+    {% for variant in product.variants %}
+      "{{ variant.id }}": {{ variant.inventory_quantity | default: 0 }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  };
+  window.Restockly.shop = "{{ shop.permanent_domain }}";
+  // lowStockThreshold and lowStockText are fetched from app settings API by widget.js
+</script>
+
+{{ 'widget.js' | asset_url | script_tag }}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Restockly",
+  "target": "body",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Notify Button Text",
+      "default": "Notify Me When Available"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#0d9488"
+    }
+  ]
+}
+{% endschema %}

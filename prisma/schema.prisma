@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model Subscription {
+  id                   Int      @id @default(autoincrement())
+  shop                 String
+  productId            String
+  variantId            String
+  variantTitle         String?
+  productTitle         String?
+  productImage         String?
+  productHandle        String?
+  channel              String   // "email" or "push"
+  pushSubscriptionJson String?  // Stores JSON payload for web push browser tokens
+  status               String   @default("PENDING") // "PENDING", "SENT"
+  reminderCount        Int      @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @default(now()) @updatedAt
+}
+
+model Settings {
+  id                Int      @id @default(autoincrement())
+  shop              String   @unique
+  buttonText        String   @default("Notify Me When Available")
+  confirmMsg        String   @default("You're on the list!")
+  theme             String   @default("Standard")
+  pushEnabled       Boolean  @default(false)
+  
+  lowStockThreshold Int?
+  lowStockText      String   @default("Only {quantity} units remaining")
+  lowStockTheme     String   @default("Standard")
+
+  pushTitle         String   @default("{product_name} is back in stock!")
+  pushBody          String   @default("Grab it before it sells out again — tap to shop now.")
+  pushCta           String   @default("Direct to product page (default)")
+
+  pushReminderEnabled Boolean  @default(false)
+  pushReminderDelay   String   @default("3 days")
+  pushReminderMax     Int      @default(2)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
