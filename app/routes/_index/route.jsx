@@ -1,6 +1,4 @@
-import { redirect, Form, useLoaderData } from "react-router";
-import { login } from "../../shopify.server";
-import styles from "./styles.module.css";
+import { redirect } from "react-router";
 
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
@@ -9,46 +7,40 @@ export const loader = async ({ request }) => {
     throw redirect(`/app?${url.searchParams.toString()}`);
   }
 
-  return { showForm: Boolean(login) };
+  return null;
 };
 
 export default function App() {
-  const { showForm } = useLoaderData();
-
   return (
-    <div className={styles.index}>
-      <div className={styles.content}>
-        <h1 className={styles.heading}>A short heading about [your app]</h1>
-        <p className={styles.text}>
-          A tagline about [your app] that describes your value proposition.
-        </p>
-        {showForm && (
-          <Form className={styles.form} method="post" action="/auth/login">
-            <label className={styles.label}>
-              <span>Shop domain</span>
-              <input className={styles.input} type="text" name="shop" />
-              <span>e.g: my-shop-domain.myshopify.com</span>
-            </label>
-            <button className={styles.button} type="submit">
-              Log in
-            </button>
-          </Form>
-        )}
-        <ul className={styles.list}>
-          <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
-          </li>
-          <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
-          </li>
-          <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
-          </li>
-        </ul>
-      </div>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      height: "100vh",
+      width: "100vw",
+      backgroundColor: "#f6f6f7",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      paddingTop: "48px",
+      margin: 0,
+      boxSizing: "border-box"
+    }}>
+      <h1 style={{
+        fontSize: "14px",
+        fontWeight: "500",
+        color: "#202223",
+        margin: "0 0 40px 0"
+      }}>
+        Restockly
+      </h1>
+      <p style={{
+        fontSize: "18px",
+        fontWeight: "400",
+        color: "#202223",
+        margin: 0
+      }}>
+        Open this app from your Shopify admin to get started.
+      </p>
     </div>
   );
 }
