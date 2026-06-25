@@ -10,7 +10,11 @@ name = "Restockly"
 scopes = "read_inventory,read_orders,read_locales,read_markets,read_products,read_translations,write_inventory,write_locales,write_products,write_translations"
   
 [auth]
-redirect_urls = [ "https://restockly-weld.vercel.app/api/auth" ]
+redirect_urls = [
+  "https://restockly-weld.vercel.app/auth/callback",
+  "https://restockly-weld.vercel.app/auth/shopify/callback",
+  "https://restockly-weld.vercel.app/api/auth/callback"
+]
 
 [webhooks]
 api_version = "2026-07"
