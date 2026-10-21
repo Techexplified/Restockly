@@ -31,7 +31,7 @@ export default function App() {
         color: "#202223",
         margin: "0 0 40px 0"
       }}>
-        Restockly
+        StockSignal
       </h1>
       <p style={{
         fontSize: "18px",

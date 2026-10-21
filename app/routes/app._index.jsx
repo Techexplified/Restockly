@@ -411,7 +411,7 @@ export default function Dashboard() {
           <div class="dash-card-header">
             <div>
               <p class="dash-card-title">Recent Activity</p>
-              <p class="dash-card-subtitle">Live updates from your Restockly campaigns</p>
+              <p class="dash-card-subtitle">Live updates from your StockSignal campaigns</p>
             </div>
             {activityFeed.length > 0 && (
               <Link to="/app/notifications" class="view-all-link">

@@ -737,7 +737,7 @@ function PushNotificationsSettings({ initialSettings }) {
                     <div class="push-banner-header">
                       <div class="push-banner-app-info">
                         <div class="push-banner-app-icon">🔔</div>
-                        <span>Restockly</span>
+                        <span>StockSignal</span>
                       </div>
                       <span class="push-banner-time">now</span>
                     </div>

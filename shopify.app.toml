@@ -3,7 +3,7 @@
 client_id = "75434c1dcf87415a758a5551a63cbf54"
 application_url = "https://restockly-weld.vercel.app"
 embedded = true
-name = "Restockly"
+name = "StockSignal"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes

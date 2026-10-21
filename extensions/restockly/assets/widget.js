@@ -35,7 +35,7 @@
         }
       }
     } catch (err) {
-      console.warn("Failed to load Restockly settings:", err);
+      console.warn("Failed to load StockSignal settings:", err);
     }
   }
 
@@ -253,10 +253,10 @@
       try {
         const swUrl = `${appUrl}/sw.js`;
         const registration = await navigator.serviceWorker.register(swUrl, { scope: `${appUrl}/` });
-        console.log("Restockly Service Worker registered:", registration);
+        console.log("StockSignal Service Worker registered:", registration);
         return registration;
       } catch (err) {
-        console.warn("Restockly Service Worker registration failed:", err);
+        console.warn("StockSignal Service Worker registration failed:", err);
       }
     }
     return null;
@@ -392,14 +392,14 @@
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("Restockly cart attribution set successfully:", subId);
+            console.log("StockSignal cart attribution set successfully:", subId);
           })
           .catch((err) => {
-            console.warn("Failed to set Restockly cart attribution:", err);
+            console.warn("Failed to set StockSignal cart attribution:", err);
           });
       }
     } catch (err) {
-      console.warn("Error handling Restockly cart attribution:", err);
+      console.warn("Error handling StockSignal cart attribution:", err);
     }
   }
 
