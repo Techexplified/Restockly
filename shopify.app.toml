@@ -1,6 +1,6 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "75434c1dcf87415a758a5551a63cbf54"
+client_id = "24c69cb6a7fb9c5ae05fd59b930deef9"
 application_url = "https://restockly-weld.vercel.app"
 embedded = true
 name = "StockSignal"
@@ -68,7 +68,6 @@ redirect_urls = [
 ]
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = true
 
 [app_proxy]
